@@ -1,11 +1,48 @@
-import { Sequelize, DataTypes } from 'sequelize';
-import userFactory from './User.js'; 
+import { Sequelize } from 'sequelize';
+import userModel from './User.js';
+import photoModel from './Photo.js';
 
 const sequelize = new Sequelize('photo_stock', 'root', 'root', {
-  dialect: 'postgres',
-  host: 'localhost'
+    host: 'localhost',
+    dialect: 'postgres'
 });
 
-const User = userFactory(sequelize, DataTypes);
+const User = userModel(sequelize, Sequelize.DataTypes);
+const Photo = photoModel(sequelize, Sequelize.DataTypes);
 
-export { sequelize, User };
+const db = {
+    User,
+    Photo,
+    sequelize,
+    Sequelize
+};
+
+Object.keys(db).forEach(modelName => {
+    if (db[modelName].associate) {
+        db[modelName].associate(db);
+    }
+});
+
+sequelize.sync({ force: false }).then(() => {
+    console.log('Database & tables created!');
+}).catch(err => {
+    console.error('Unable to sync database:', err);
+});
+
+export default db;
+export { User, Photo, sequelize };
+
+//export { db as default, User, Photo, sequelize };
+
+
+// import { Sequelize, DataTypes } from 'sequelize';
+// import userFactory from './User.js'; 
+
+// const sequelize = new Sequelize('photo_stock', 'root', 'root', {
+//   dialect: 'postgres',
+//   host: 'localhost'
+// });
+
+// const User = userFactory(sequelize, DataTypes);
+
+// export { sequelize, User };

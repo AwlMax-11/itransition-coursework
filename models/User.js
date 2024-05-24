@@ -15,7 +15,8 @@ export default function(sequelize, DataTypes) {
         },
         email: {
             type: DataTypes.STRING(250),
-            allowNull: false
+            allowNull: false,
+            unique: true 
         },
         registrationDate: {
             type: DataTypes.DATE,
@@ -35,6 +36,13 @@ export default function(sequelize, DataTypes) {
     }, {
         tableName: 'users'
     });
+
+    User.associate = function(models) {
+        User.hasMany(models.Photo, {
+            foreignKey: 'userId',
+            as: 'photos'
+        });
+    };
     
     return User;
 }
