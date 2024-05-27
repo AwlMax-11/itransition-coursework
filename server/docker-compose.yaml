@@ -1,0 +1,12 @@
+services:
+  pgdatabase:
+    container_name: photo_stock
+    image: postgres:16
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=photo_stock
+    volumes:
+      - "./photo_stock:/var/lib/postgresql/data:rw"
+    ports:
+      - "5432:5432"
