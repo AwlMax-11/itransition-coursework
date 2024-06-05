@@ -56,7 +56,7 @@ export const AddPhoto = () => {
         placeholder="Заголовок статьи..."
         fullWidth
       />
-      <TextField classes={{ root: styles.tags }} variant="standard" placeholder="Тэги" fullWidth />
+      <TextField classes={{ root: styles.category }} variant="standard" placeholder="Тэги" fullWidth />
       <SimpleMDE className={styles.editor} value={value} onChange={onChange} options={options} />
       <div className={styles.buttons}>
         <Button size="large" variant="contained">

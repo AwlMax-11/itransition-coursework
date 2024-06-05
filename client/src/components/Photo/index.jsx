@@ -12,14 +12,14 @@ import { UserInfo } from '../UserInfo';
 import { PhotoSkeleton } from './Skeleton';
 
 export const Photo = ({
-  _id,
+  id,
   title,
   createdAt,
-  imageUrl,
-  user,
+  image,
+  username,
   viewsCount,
   commentsCount,
-  tags,
+  category,
   children,
   isFullPhoto,
   isLoading,
@@ -31,11 +31,13 @@ export const Photo = ({
 
   const onClickRemove = () => {};
 
+  console.log("1",{ id, title, image, username, createdAt, viewsCount, commentsCount, category, isEditable });
+
   return (
     <div className={clsx(styles.root, { [styles.rootFull]: isFullPhoto })}>
       {isEditable && (
         <div className={styles.editButtons}>
-          <Link to={`/photos/${_id}/edit`}>
+          <Link to={`/photos/${id}/edit`}>
             <IconButton color="primary">
               <EditIcon />
             </IconButton>
@@ -45,25 +47,25 @@ export const Photo = ({
           </IconButton>
         </div>
       )}
-      {imageUrl && (
+      {image && (
         <img
           className={clsx(styles.image, { [styles.imageFull]: isFullPhoto })}
-          src={imageUrl}
+          src={image}
           alt={title}
         />
       )}
       <div className={styles.wrapper}>
-        <UserInfo {...user} additionalText={createdAt} />
+        <UserInfo {...username} additionalText={createdAt} />
         <div className={styles.indention}>
           <h2 className={clsx(styles.title, { [styles.titleFull]: isFullPhoto })}>
-            {isFullPhoto ? title : <Link to={`/photos/${_id}`}>{title}</Link>}
+            {isFullPhoto ? title : <Link to={`/photos/${id}`}>{title}</Link>}
           </h2>
-          <ul className={styles.tags}>
-            {tags.map((name) => (
-              <li key={name}>
-                <Link to={`/tag/${name}`}>#{name}</Link>
+          <ul className={styles.category}>
+            {Array.isArray(category) ? category.map((username) => (
+              <li key={username}>
+                <Link to={`/category/${username}`}>#{username}</Link>
               </li>
-            ))}
+            )) : <li>Uncategorized</li>}
           </ul>
           {children && <div className={styles.content}>{children}</div>}
           <ul className={styles.postDetails}>

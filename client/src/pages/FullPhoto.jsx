@@ -19,7 +19,7 @@ export const FullPhoto = () => {
         createdAt={"12 июня 2022 г."}
         viewsCount={150}
         commentsCount={3}
-        tags={["react", "fun", "typescript"]}
+      //  tags={["react", "fun", "typescript"]}
         isFullPhoto
       >
         <p>

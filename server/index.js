@@ -1,5 +1,7 @@
 import express from 'express';
 import multer from 'multer';
+import cors from 'cors';
+
 import { UserController, PhotoController } from './controllers/index.js';
 import { handleValidationErrors, checkAuth } from './utils/index.js'
 import { registerValidation } from './validations/register.js';
@@ -9,6 +11,7 @@ import { photoValidation } from './validations/photo.js';
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 const storage = multer.memoryStorage(); 
 const upload = multer({ storage });
@@ -23,7 +26,7 @@ app.post('/photos', checkAuth, upload.single('image'), photoValidation, handleVa
 app.delete('/photos/:id', checkAuth, photoValidation, PhotoController.remove);
 app.patch('/photos/:id', checkAuth, handleValidationErrors, PhotoController.update);
 
-app.listen(3000, (err) => {
+app.listen(5000, (err) => {
     if (err) {
         return console.log(err);
     }
